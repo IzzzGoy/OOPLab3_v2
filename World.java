@@ -15,7 +15,6 @@ public class World {
         for (int i = 0; i < (int) Math.pow(size, 2); i++) {
             land.add(new Territory());
         }
-        System.out.println(land.size());
     }
 
     public int size() {
