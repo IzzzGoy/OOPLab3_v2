@@ -2,12 +2,12 @@ package sample.bots;
 
 import javafx.scene.paint.Color;
 import sample.Territory;
-import sample.tribe.TribesType;
 import sample.World;
+import sample.tribe.TribesType;
 
-public class Attacker extends Bot{
+public class Attacker extends Bot {
     public Attacker(final Color color, String name, TribesType type, Territory territory, World world) {
-        super(color,name,type,territory,world);
+        super(color, name, type, territory, world);
     }
 
     @Override
@@ -18,8 +18,7 @@ public class Attacker extends Bot{
                 addAttack();
             } else if (choice >= 0.6 && choice < 0.9) {
                 addBorn();
-            }
-            else {
+            } else {
                 addFoodProduction();
             }
         }

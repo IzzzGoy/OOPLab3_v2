@@ -7,7 +7,7 @@ import sample.tribe.TribesType;
 
 public class PopulationMaster extends Bot {
     public PopulationMaster(final Color color, String name, TribesType type, Territory territory, World world) {
-        super(color,name,type,territory,world);
+        super(color, name, type, territory, world);
     }
 
     @Override
@@ -18,8 +18,7 @@ public class PopulationMaster extends Bot {
                 addAttack();
             } else if (choice >= 0.4 && choice < 0.9) {
                 addBorn();
-            }
-            else {
+            } else {
                 addFoodProduction();
             }
         }

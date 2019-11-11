@@ -5,9 +5,9 @@ import sample.Territory;
 import sample.World;
 import sample.tribe.TribesType;
 
-public class Defender extends Bot{
+public class Defender extends Bot {
     public Defender(final Color color, String name, TribesType type, Territory territory, World world) {
-        super(color,name,type,territory,world);
+        super(color, name, type, territory, world);
     }
 
     @Override
@@ -18,8 +18,7 @@ public class Defender extends Bot{
                 addAttack();
             } else if (choice >= 0.2 && choice < 0.6) {
                 addBorn();
-            }
-            else {
+            } else {
                 addFoodProduction();
             }
         }

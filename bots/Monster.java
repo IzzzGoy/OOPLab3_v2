@@ -7,7 +7,7 @@ import sample.tribe.TribesType;
 
 public class Monster extends Bot {
     public Monster(final Color color, String name, TribesType type, Territory territory, World world) {
-        super(color,name,type,territory,world);
+        super(color, name, type, territory, world);
     }
 
     @Override
@@ -18,8 +18,7 @@ public class Monster extends Bot {
                 addAttack();
             } else if (choice >= 0.5 && choice < 0.99) {
                 addBorn();
-            }
-            else {
+            } else {
                 addFoodProduction();
             }
         }
