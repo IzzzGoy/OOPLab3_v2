@@ -3,8 +3,6 @@ package sample;
 import javafx.scene.paint.Color;
 import sample.tribe.*;
 
-import java.util.ArrayList;
-
 public class Player {
 
     private Tribe tribe;
@@ -14,18 +12,18 @@ public class Player {
     public Player(final Color color, String name, TribesType type, Territory territory, World world) {
         switch (type) {
             case OMNIVOROUS:
-                tribe = new Omnivorous(name,territory, world);
+                tribe = new Omnivorous(name, territory, world);
                 break;
             case HERBIVORES:
-                tribe = new Herbivores(name,territory, world);
+                tribe = new Herbivores(name, territory, world);
                 break;
             case PREDATORS:
-                tribe = new Predators(name,territory, world);
+                tribe = new Predators(name, territory, world);
                 break;
         }
         this.color = color;
         evolutionPoints = 0;
-        territory.Colonization(tribe, 100);
+        territory.colonization(tribe, 100);
         world.addTribe(tribe);
     }
 
@@ -35,8 +33,10 @@ public class Player {
 
     public long getPopulation() {
         long population = 0;
-        for (Territory territory: tribe.getTribesTerritories()) {
-            population += territory.getPopulation();
+        for (Territory territory : tribe.getTribesTerritories()) {
+            if ( territory != null) {
+                population += territory.getPopulation();
+            }
         }
         return population;
     }
@@ -72,10 +72,6 @@ public class Player {
 
     public Color getColor() {
         return color;
-    }
-
-    public ArrayList<Territory> getTerritories() {
-        return tribe.getTribesTerritories();
     }
 
     public Tribe getTribe() {

@@ -35,16 +35,20 @@ public class Main extends Application {
     private int bot1EVOChanse = 0;
     private int bot2EVOChanse = 0;
     private int bot3EVOChanse = 0;
-    private World world = new World();
+    private World world = new World(50);
 
     {
-        initBots(Color.web("#ef5350"),"Bot1");
-        initBots(Color.GRAY,"Bot2");
-        initBots(Color.ROSYBROWN,"Bot3");
+        initBots(Color.web("#ef5350"), "Bot1");
+        initBots(Color.GRAY, "Bot2");
+        initBots(Color.ROSYBROWN, "Bot3");
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();
@@ -60,14 +64,12 @@ public class Main extends Application {
         root.onKeyPressedProperty().set(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE) {
                 isPause = !isPause;
-                System.out.println("Space was pressed");
             }
         });
 
         gamePane.onKeyPressedProperty().set(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE) {
                 isPause = !isPause;
-                System.out.println("Space was pressed");
             }
         });
 
@@ -84,15 +86,14 @@ public class Main extends Application {
 
                 draw(controller);
 
-            }
-            else {
+            } else {
                 double x = mouseEvent.getX() + (1000 - gamePane.getWidth()) * gamePane.getHvalue();
                 double y = mouseEvent.getY() + (1000 - gamePane.getHeight()) * gamePane.getVvalue();
 
                 Xint = ((int) x) / 20;
                 Yint = ((int) y / 20);
                 Territory territory = world.getLand().get(Xint + Yint * 50);
-                controller.setCellStats(territory.getOwnerName(),Integer.toString(territory.getPopulation()),Integer.toString(territory.getWater()),Integer.toString((int)territory.getPlants()),Integer.toString((int)territory.getAnimals()));
+                controller.setCellStats(territory.getOwnerName(), Integer.toString(territory.getPopulation()), Integer.toString(territory.getWater()), Integer.toString((int) territory.getPlants()), Integer.toString((int) territory.getAnimals()));
             }
         });
 
@@ -103,23 +104,22 @@ public class Main extends Application {
                 changeInfo();
                 if (player != null) {
                     if (player.getPopulation() == 0) defitedCount++;
-                    for (Bot bot: bots) {
+                    for (Bot bot : bots) {
                         if (bot.getPopulation() == 0) defitedCount++;
                     }
                     if (defitedCount == 3) {
                         game = false;
-                        controller.clearCanvas();
+                        controller.clearField();
+                        controller.showGameOver();
                         animationTimer.stop();
-                    }
-                    else {
+                    } else {
                         draw(controller);
                         controller.EVOPintsValueRefresh(Integer.toString(player.getEvolutionPoints()));
-                        controller.ShowPlayerStat(Long.toString(player.getPopulation()), Double.toString(player.getTribe().getAttack()), Double.toString(player.getTribe().getFood_production()), Double.toString(player.getTribe().getBorn()));
+                        controller.playerStatRefresh(Long.toString(player.getPopulation()), Double.toString(player.getTribe().getAttack()), Double.toString(player.getTribe().getFood_production()), Double.toString(player.getTribe().getBorn()));
                     }
-                }
-                else {
-                    controller.clearCanvas();
-                    controller.FieldInit();
+                } else {
+                    controller.clearField();
+                    controller.initField();
                 }
             }
         };
@@ -135,6 +135,9 @@ public class Main extends Application {
                     }
                     while (game) {
                         if (!isPause) {
+                            for (Bot bot : bots) {
+                                bot.update();
+                            }
                             world.update();
                             EVOChanseRoll();
                         }
@@ -144,47 +147,36 @@ public class Main extends Application {
                     System.out.println(e.getMessage());
                 }
             }
-        },0,600);
+        }, 0, 600);
 
 
-
-
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Lab3");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.setMaximized(true);
         primaryStage.show();
-
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     private void draw(Controller controller) {
-        controller.clearCanvas();
+        controller.clearField();
         for (int i = 0; i < world.getLand().size(); i++) {
             if (world.getLand().get(i).getOwner() != null) {
                 if (world.getLand().get(i).getOwnerName().equals(player.getName())) {
-                    controller.draw((i % 50) * 20, (i / 50) * 20, player.getColor());
-                }
-                else if (world.getLand().get(i).getOwnerName().equals(bots.get(0).getName())) {
-                    controller.draw((i % 50) * 20, (i / 50) * 20, bots.get(0).getColor());
-                }
-                else if (world.getLand().get(i).getOwnerName().equals(bots.get(1).getName())) {
-                    controller.draw((i % 50) * 20, (i / 50) * 20, bots.get(1).getColor());
-                }
-                else if (world.getLand().get(i).getOwnerName().equals(bots.get(2).getName())) {
-                    controller.draw((i % 50) * 20, (i / 50) * 20, bots.get(2).getColor());
+                    controller.draw((i % world.length()) * 20, (i / world.length()) * 20, player.getColor());
+                } else if (world.getLand().get(i).getOwnerName().equals(bots.get(0).getName())) {
+                    controller.draw((i % world.length()) * 20, (i / world.length()) * 20, bots.get(0).getColor());
+                } else if (world.getLand().get(i).getOwnerName().equals(bots.get(1).getName())) {
+                    controller.draw((i % world.length()) * 20, (i / world.length()) * 20, bots.get(1).getColor());
+                } else if (world.getLand().get(i).getOwnerName().equals(bots.get(2).getName())) {
+                    controller.draw((i % world.length()) * 20, (i / world.length()) * 20, bots.get(2).getColor());
                 }
             }
 
         }
-        controller.FieldInit();
+        controller.initField();
     }
 
     private void changeInfo() {
-        controller.setCellStats(world.getLand().get(Xint + Yint * 50).getOwnerName(),Integer.toString(world.getLand().get(Xint + Yint * 50).getPopulation()),Integer.toString(world.getLand().get(Xint + Yint * 50).getWater()),Integer.toString((int)world.getLand().get(Xint + Yint * 50).getPlants()),Integer.toString((int)world.getLand().get(Xint + Yint * 50).getAnimals()));
+        controller.setCellStats(world.getLand().get(Xint + Yint * world.length()).getOwnerName(), Integer.toString(world.getLand().get(Xint + Yint * world.length()).getPopulation()), Integer.toString(world.getLand().get(Xint + Yint * world.length()).getWater()), Integer.toString((int) world.getLand().get(Xint + Yint * world.length()).getPlants()), Integer.toString((int) world.getLand().get(Xint + Yint * world.length()).getAnimals()));
     }
 
     private void EVOChanseRoll() {
@@ -213,16 +205,16 @@ public class Main extends Application {
     void initBots(Color color, String name) {
         switch (BotsType.getRandomType()) {
             case MONSTER:
-                bots.add(new Monster(color,name, TribesType.getRandomType(),world.getLand().get(random.nextInt(world.size())), world));
+                bots.add(new Monster(color, name, TribesType.getRandomType(), world.getLand().get(random.nextInt(world.size())), world));
                 break;
             case ATTACKER:
-                bots.add(new Attacker(color,name, TribesType.getRandomType(),world.getLand().get(random.nextInt(world.size())), world));
+                bots.add(new Attacker(color, name, TribesType.getRandomType(), world.getLand().get(random.nextInt(world.size())), world));
                 break;
             case POPULATION_MASTER:
-                bots.add(new PopulationMaster(color,name, TribesType.getRandomType(),world.getLand().get(random.nextInt(world.size())), world));
+                bots.add(new PopulationMaster(color, name, TribesType.getRandomType(), world.getLand().get(random.nextInt(world.size())), world));
                 break;
             case DEFENDER:
-                bots.add(new Defender(color,name, TribesType.getRandomType(),world.getLand().get(random.nextInt(world.size())), world));
+                bots.add(new Defender(color, name, TribesType.getRandomType(), world.getLand().get(random.nextInt(world.size())), world));
                 break;
         }
     }

@@ -1,104 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-
-<BorderPane id="root" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-   <center>
-      <ScrollPane id="gamePane" fx:id="gamePane" prefHeight="200.0" prefWidth="200.0" styleClass="gamePane" stylesheets="@style.css" BorderPane.alignment="CENTER">
-         <content>
-            <Canvas fx:id="gameField" height="200.0" width="200.0" />
-         </content></ScrollPane>
-   </center>
-   <right>
-      <TabPane fx:id="actionTab" prefHeight="200.0" prefWidth="200.0" styleClass="actionTab" stylesheets="@style.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab id="tab" text="Statistics">
-               <content>
-                  <VBox fx:id="statBox" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
-                     <children>
-                        <HBox fx:id="populationStat" prefHeight="30.0" prefWidth="200.0" spacing="10.0">
-                           <children>
-                              <Label text="Population" />
-                              <Label fx:id="populationValue" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="30.0" prefWidth="200.0" spacing="10.0">
-                           <children>
-                              <Label text="Attack" />
-                              <Label fx:id="AttackLabel" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="30.0" prefWidth="200.0" spacing="10.0">
-                           <children>
-                              <Label text="FoodProd" />
-                              <Label fx:id="FoodProdLable" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="30.0" prefWidth="200.0" spacing="10.0">
-                           <children>
-                              <Label text="BorningRate" />
-                              <Label fx:id="BorningRateLable" />
-                           </children>
-                        </HBox>
-                     </children></VBox>
-               </content></Tab>
-          <Tab id="tab" text="Evolution">
-               <content>
-                  <VBox fx:id="evolutionBox" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                     <children>
-                        <FlowPane hgap="10.0" prefHeight="21.0" prefWidth="200.0" vgap="10.0">
-                           <children>
-                              <Label text="Evolution points" />
-                              <Label fx:id="EVOPintsValue" />
-                           </children>
-                        </FlowPane>
-                        <Button fx:id="AddAttackButton" mnemonicParsing="false" text="AddAttack" />
-                        <Button fx:id="AddFoodProdutionButton" mnemonicParsing="false" text="AddFoodProdution" />
-                        <Button fx:id="AddBorningButton" mnemonicParsing="false" text="AddBorning" />
-                     </children></VBox>
-               </content></Tab>
-        </tabs>
-      </TabPane>
-   </right>
-   <bottom>
-      <VBox id="cellStat" fx:id="cellStat" prefHeight="100.0" prefWidth="600.0" styleClass="cellStat" stylesheets="@style.css" BorderPane.alignment="CENTER">
-         <children>
-            <HBox fx:id="OwnerBox" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label text="Owner" />
-                  <Label fx:id="OwnerLabel" />
-               </children>
-            </HBox>
-            <HBox fx:id="PopulationBox" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label text="Population" />
-                  <Label fx:id="populationLabel" />
-               </children>
-            </HBox>
-            <HBox fx:id="WaterBox" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label text="WaterLimit" />
-                  <Label fx:id="WaterLbel" />
-               </children>
-            </HBox>
-            <HBox fx:id="ResourceBox" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label text="Plants" />
-                  <Label fx:id="PlantsLabel" />
-                  <Label text="Animals" />
-                  <Label fx:id="AnimalsLabel" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </bottom>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" id="root" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="root"
+            stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1"
+            fx:controller="sample.Controller">
+    <center>
+        <ScrollPane id="gamePane" fx:id="gamePane" prefHeight="200.0" prefWidth="200.0" styleClass="gamePane"
+                    stylesheets="@style.css" BorderPane.alignment="CENTER">
+            <content>
+                <Canvas fx:id="gameField" height="200.0" width="200.0"/>
+            </content>
+        </ScrollPane>
+    </center>
+    <right>
+        <TabPane fx:id="actionTab" prefHeight="200.0" prefWidth="200.0" styleClass="actionTab" stylesheets="@style.css"
+                 tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab id="tab" text="Statistics">
+                    <content>
+                        <VBox fx:id="statBox" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                            <children>
+                                <Label text="Текущая численность племени"/>
+                                <HBox fx:id="populationStat" prefHeight="30.0" prefWidth="200.0" spacing="10.0">
+                                    <children>
+                                        <Label text="Population"/>
+                                        <Label fx:id="populationValue"/>
+                                    </children>
+                                </HBox>
+                                <Label text="Показатель атаки племени."/>
+                                <Label text=" Чем он выше, тем больше врагов смогут убить наши воины"/>
+                                <HBox prefHeight="30.0" prefWidth="200.0" spacing="10.0">
+                                    <children>
+                                        <Label text="Attack"/>
+                                        <Label fx:id="AttackLabel"/>
+                                    </children>
+                                </HBox>
+                                <Label text="Показатель производственных навыков племени."/>
+                                <Label text=" Чем он выше, тем больше еды выращивает влемя на территории"/>
+                                <HBox prefHeight="30.0" prefWidth="200.0" spacing="10.0">
+                                    <children>
+                                        <Label text="FoodProd"/>
+                                        <Label fx:id="FoodProdLable"/>
+                                    </children>
+                                </HBox>
+                                <Label text="Показатель рождаемости в племени."/>
+                                <Label text=" Чем он выше, тем быстрее растёт численность населения"/>
+                                <HBox prefHeight="30.0" prefWidth="200.0" spacing="10.0">
+                                    <children>
+                                        <Label text="BorningRate"/>
+                                        <Label fx:id="BorningRateLable"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab id="tab" text="Evolution">
+                    <content>
+                        <VBox fx:id="evolutionBox" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                            <children>
+                                <FlowPane hgap="10.0" prefHeight="21.0" prefWidth="200.0" vgap="10.0">
+                                    <children>
+                                        <Label text="Evolution points"/>
+                                        <Label fx:id="EVOPintsValue"/>
+                                    </children>
+                                </FlowPane>
+                                <Button fx:id="AddAttackButton" mnemonicParsing="false" text="AddAttack"/>
+                                <Button fx:id="AddFoodProdutionButton" mnemonicParsing="false" text="AddFoodProdution"/>
+                                <Button fx:id="AddBorningButton" mnemonicParsing="false" text="AddBorning"/>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </right>
+    <bottom>
+        <VBox id="cellStat" fx:id="cellStat" prefHeight="100.0" prefWidth="600.0" styleClass="cellStat"
+              stylesheets="@style.css" BorderPane.alignment="CENTER">
+            <children>
+                <HBox fx:id="OwnerBox" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Owner"/>
+                        <Label fx:id="OwnerLabel"/>
+                    </children>
+                </HBox>
+                <HBox fx:id="PopulationBox" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Population"/>
+                        <Label fx:id="populationLabel"/>
+                    </children>
+                </HBox>
+                <HBox fx:id="WaterBox" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="WaterLimit"/>
+                        <Label fx:id="WaterLbel"/>
+                    </children>
+                </HBox>
+                <HBox fx:id="ResourceBox" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Plants"/>
+                        <Label fx:id="PlantsLabel"/>
+                        <Label text="Animals"/>
+                        <Label fx:id="AnimalsLabel"/>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </bottom>
 </BorderPane>

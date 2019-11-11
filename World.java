@@ -9,16 +9,13 @@ public class World {
     private ArrayList<Territory> land;
     private ArrayList<Tribe> tribes = new ArrayList<>(4);
 
-    public World() {
-        System.out.println((int)Math.pow(size,2));
-    }
-
-    {
-        size = 50;
-        land = new ArrayList<>((int)Math.pow(size,2));
-        for (int i = 0; i < (int)Math.pow(size,2); i++) {
+    public World(int size) {
+        this.size = size;
+        land = new ArrayList<>((int) Math.pow(size, 2));
+        for (int i = 0; i < (int) Math.pow(size, 2); i++) {
             land.add(new Territory());
         }
+        System.out.println(land.size());
     }
 
     public int size() {
@@ -36,9 +33,9 @@ public class World {
     public ArrayList<Integer> getNeighbors(Territory territory) {
         int position = land.indexOf(territory);
         ArrayList<Integer> neighbors = new ArrayList<>();
-        if (position < 50) {
+        if (position < size) {
             neighbors.add(position + size);
-        } else if (position > 2449) {
+        } else if (position > land.size() - size - 1) {
             neighbors.add(position - size);
         } else {
             neighbors.add(position + size);
@@ -47,7 +44,7 @@ public class World {
         if (position % size != 0) {
             neighbors.add(position - 1);
         }
-        if ((position + 1) % size != 0 ) {
+        if ((position + 1) % size != 0) {
             neighbors.add(position + 1);
         }
         return neighbors;
@@ -58,10 +55,10 @@ public class World {
     }
 
     public void update() {
-        for (Territory territory: land) {
+        for (Territory territory : land) {
             territory.update();
         }
-        for (Tribe tribe: tribes) {
+        for (Tribe tribe : tribes) {
             tribe.update();
         }
     }

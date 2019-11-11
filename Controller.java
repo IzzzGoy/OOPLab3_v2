@@ -1,6 +1,5 @@
 package sample;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -9,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -81,10 +79,10 @@ public class Controller implements Initializable {
         gamePane.setMaxWidth(1000);
         gameField.setHeight(1000);
         gameField.setWidth(1000);
-        actionTab.setMinWidth(300);
+        actionTab.setMinWidth(400);
         gamePane.setMaxHeight(1000);
         graphicsContext = gameField.getGraphicsContext2D();
-        FieldInit();
+        initField();
     }
 
     public void draw(double X, double Y, Color color) {
@@ -92,7 +90,7 @@ public class Controller implements Initializable {
         int Yint = ((int) Y / 20);
 
         graphicsContext.setFill(color);
-        graphicsContext.fillRect((double)Xint * 20, (double) Yint * 20, 20, 20);
+        graphicsContext.fillRect((double) Xint * 20, (double) Yint * 20, 20, 20);
     }
 
     public void setCellStats(String owner, String population, String water, String plants, String animals) {
@@ -103,16 +101,20 @@ public class Controller implements Initializable {
         AnimalsLabel.setText(animals);
     }
 
-    public void clearCanvas() {
-        graphicsContext.clearRect(0,0,1000,1000);
+    public void clearField() {
+        graphicsContext.clearRect(0, 0, 1000, 1000);
     }
 
-    public void FieldInit() {
+    public void showGameOver() {
+        graphicsContext.fillText("GAME OVER", gameField.getWidth() / 2, gameField.getHeight() / 2);
+    }
+
+    public void initField() {
         for (int i = 0; i < 50; i++) {
             for (int j = 0; j < 50; j++) {
                 graphicsContext.setStroke(Color.BLACK);
                 graphicsContext.setLineWidth(0.3);
-                graphicsContext.strokeRect(i * 20, j * 20, 20,20);
+                graphicsContext.strokeRect(i * 20, j * 20, 20, 20);
             }
         }
     }
@@ -121,7 +123,7 @@ public class Controller implements Initializable {
         EVOPintsValue.setText(value);
     }
 
-    public void ShowPlayerStat(String population,String attack, String food, String born) {
+    public void playerStatRefresh(String population, String attack, String food, String born) {
         populationValue.setText(population);
         AttackLabel.setText(attack);
         FoodProdLable.setText(food);
