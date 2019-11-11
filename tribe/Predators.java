@@ -8,15 +8,15 @@ public class Predators extends Tribe {
     private final double needAnimals = 0.7;
 
     public Predators(String name, Territory terr, World world) {
-        super(TribesType.PREDATORS,name, terr, world);
+        super(TribesType.PREDATORS, name, terr, world);
         food_production = 8.6;
         attack = 25.0;
     }
 
     @Override
     protected void eat() {
-        for (Territory territory: getTribesTerritories()) {
-            territory.EatAnimals(needAnimals);
+        for (Territory territory : getTribesTerritories()) {
+            territory.eatAnimals(needAnimals);
         }
     }
 

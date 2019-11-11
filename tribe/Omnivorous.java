@@ -18,9 +18,9 @@ public class Omnivorous extends Tribe {
 
     @Override
     protected void eat() {
-        for (Territory territory: getTribesTerritories()) {
-            territory.EatPlants(needPlants);
-            territory.EatAnimals(needAnimals);
+        for (Territory territory : getTribesTerritories()) {
+            territory.eatPlants(needPlants);
+            territory.eatAnimals(needAnimals);
         }
     }
 

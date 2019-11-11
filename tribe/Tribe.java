@@ -7,16 +7,15 @@ import java.util.ArrayList;
 
 public abstract class Tribe {
 
+    protected double attack;
+    protected double born;
+    protected double food_production;
     private TribesType type;
     private String name;
     private ArrayList<Territory> tribesTerritories;
     private World world;
 
-    protected double attack;
-    protected double born;
-    protected double food_production;
-
-    public Tribe(TribesType type, String nameOfTribe, Territory startTerritory, World world)  {
+    public Tribe(TribesType type, String nameOfTribe, Territory startTerritory, World world) {
         this.type = type;
         name = nameOfTribe;
         tribesTerritories = new ArrayList<>();
@@ -29,7 +28,7 @@ public abstract class Tribe {
         return food_production;
     }
 
-    public void Exodus (Territory territory) {
+    public void exodus(Territory territory) {
         tribesTerritories.remove(territory);
     }
 
@@ -72,40 +71,39 @@ public abstract class Tribe {
     }
 
     private void attack(final Territory startTerritory, Territory endTerritory) {
-        if (tribesTerritories.contains(endTerritory) || endTerritory.getOwner() == null) {
+        if (endTerritory.getOwner() == this || endTerritory.getOwner() == null) {
             return;
         }
-        int warriors = (int)(attack * 1/5 * startTerritory.getPopulation());
-        if (endTerritory.Conquest(this,warriors / 10)) {
+        int warriors = (int) (attack * 1 / 5 * startTerritory.getPopulation());
+        if (endTerritory.conquest(this, warriors / 10)) {
             tribesTerritories.add(endTerritory);
-            startTerritory.changePopulation(-((1/5 * startTerritory.getPopulation())/10));
-        }
-        else {
-            startTerritory.changePopulation(-(1/5 * startTerritory.getPopulation())/20);
+            startTerritory.changePopulation(-(1 / 5 * startTerritory.getPopulation() / 10));
+        } else {
+            startTerritory.changePopulation(-(1 / 5 * startTerritory.getPopulation()) / 20);
         }
     }
 
     private void colonise(Territory startTerritory, Territory endTerritory) {
-        if (tribesTerritories.contains(endTerritory) || endTerritory.getOwner() != null) {
+        if (endTerritory.getOwner() != null) {
             return;
         }
         if (startTerritory.getPopulation() > 200) {
-            if((int) endTerritory.getPlants() == 0 || (int) endTerritory.getAnimals() == 0) {
+            if ((int) endTerritory.getPlants() == 0 || (int) endTerritory.getAnimals() == 0) {
                 return;
             }
-            endTerritory.Colonization(this, 100);
+            endTerritory.colonization(this, 100);
             tribesTerritories.add(endTerritory);
             startTerritory.changePopulation(-100);
         }
     }
 
     private void migration(Territory startTerritory, Territory endTerritory) {
-        if (!tribesTerritories.contains(endTerritory) || endTerritory.getOwner() == null) {
+        if (endTerritory.getOwner() != this || endTerritory.getOwner() == null) {
             return;
         }
-        if (endTerritory.getPopulation() != endTerritory.getWater() && (startTerritory.getPopulation() - (endTerritory.getWater() - endTerritory.getPopulation()) / 20) > 0) {
-            startTerritory.changePopulation(-(endTerritory.getWater() - endTerritory.getPopulation()) / 20);
-            endTerritory.changePopulation((endTerritory.getWater() - endTerritory.getPopulation()) / 20);
+        if (startTerritory.getPopulation() > 150 && endTerritory.getPopulation() != endTerritory.getWater() && (startTerritory.getPopulation() - (endTerritory.getWater() - endTerritory.getPopulation()) / 30) > 0) {
+            startTerritory.changePopulation(-(endTerritory.getWater() - endTerritory.getPopulation()) / 30);
+            endTerritory.changePopulation((endTerritory.getWater() - endTerritory.getPopulation()) / 30);
         }
     }
 
